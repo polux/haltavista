@@ -10,7 +10,6 @@ import Debug.Trace(trace)
 import System.IO(hFlush, stdout)
 import System.IO.Unsafe
 import Prelude hiding (catch)
-import Control.Concurrent
 
 thres = 3000000
 
