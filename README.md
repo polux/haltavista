@@ -36,13 +36,13 @@ Example session 3 (higher-order functions):
 
     Data.Graph.Inductive.Query.Monad (><)
 
+## Credits ##
+
 Under the hood, uses:
 
   - hint for type inference;
   - hoogle to get a list of candidate functions;
   - hint for testing.
-
-## Credits ##
 
 Hoogle calling facility has been copy-pasted (and later modified) from the [Yi]
 project.
