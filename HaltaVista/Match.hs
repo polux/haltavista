@@ -14,12 +14,12 @@ import Prelude hiding (catch)
 thres = 3000000
 
 matches :: (String,String) -> [([Input], Output)] -> IO Bool
-matches (m,f) ios = do putStrLn ("mod, fun = " ++ show (m,f))
-                       hFlush stdout
+matches (m,f) ios = do --putStrLn ("mod, fun = " ++ show (m,f))
+                       --hFlush stdout
                        x <- handle guard $
                             coerce_just `fmap` timeout thres command
-                       putStrLn ("res = " ++ show x)
-                       hFlush stdout
+                       --putStrLn ("res = " ++ show x)
+                       --hFlush stdout
                        return x
     where command :: IO Bool
           command = do res <- I.runInterpreter $ do I.setImports ["Prelude",m]
