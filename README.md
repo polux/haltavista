@@ -1,8 +1,9 @@
-= Haltavista =
+# Haltavista #
 
-Search for haskell functions in libraries by providing input/output examples.
+Search for haskell functions in installed libraries by providing input/output
+examples.
 
-== usage ==
+## Usage ##
 
 Example session : 
 
@@ -15,11 +16,13 @@ Example session :
 
 Under the hood, uses:
 
-  - hint for type inference
-  - hoogle for a list of candidates
-  - hint for testing
+  - hint for type inference;
+  - hoogle for a list of candidates;
+  - hint for testing.
 
-== credits ==
+## Credits ##
 
-Hoogle calling facility has been copy-pasted (and later modified) from the yi
+Hoogle calling facility has been copy-pasted (and later modified) from the [Yi]
 project.
+
+[Yi]: http://www.haskell.org/haskellwiki/Yi
