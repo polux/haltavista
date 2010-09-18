@@ -9,14 +9,32 @@ examples.
 
 ## Usage ##
 
-Example session : 
+Example session 1:
 
     brauner@worf:~$ haltavista
-    1 1 2
+    2 2 4
+    <EOF>
+
+    Prelude (*)
+    Prelude (+)
+    Prelude (^)
+
+Example session 2 (refining search 1):
+
+    brauner@worf:~$ haltavista
+    2 2 4
     1 2 3
     <EOF>
 
     Prelude (+)
+
+Example session 3 (higher-order types):
+
+   brauner@worf:~$ haltavista 
+   (+1) (+2) (1,1) (2,3)
+   <EOF>
+
+   Data.Graph.Inductive.Query.Monad (><)
 
 Under the hood, uses:
 

@@ -5,23 +5,30 @@ import Language.Haskell.Interpreter hiding (infer)
 import Data.List
 import Control.Exception(throw)
 
-convert (Left e)         = Left (show e) --return Nothing
-convert (Right (Just x)) = Right x
-convert (Right Nothing)  = Left "does not typecheck"
+convert (Left e)  = Left "wrong input"
+convert (Right x) = Right (unwords $ lines x)
 
 load = do setImports ["Prelude"]
           set [installedModulesInScope := True]
 
 infer :: [([Input],Output)] -> IO (Either String Type)
-infer ios = runInterpreter (load >> infer' ios) >>= return . convert
-
-infer' ios = do ok <- typeChecks fun
-                if ok then Just `fmap` typeOf fun
-                      else return Nothing
-             where fun = synth ios
+infer ios = runInterpreter (load >> typeOf (synth ios)) >>= return . convert
 
 synth :: [([Input],Output)] -> String
-synth ios = "let " ++ glue (map clause ios) ++ " in foo"
-  where glue xs = "{" ++ intercalate ";" xs ++ "}"
-        clause (is,o) = "foo " ++ unwords (map parens is)
-                               ++ " = " ++ o
+synth ios = prelude ++ "let " ++ body (map clause ios) ++ " in foo"
+  where body xs = "{" ++ intercalate ";" xs ++ "}"
+        args = map (("haltavista_x"++).show) [1..length (fst.head $ ios)]
+        lhs = "foo " ++ unwords args
+        clause (is,o) = lhs ++ " = let " ++ body (zipWith constr args is) ++ " in " ++ parens o
+        constr a i = "() = unif " ++ a ++ " " ++ parens i
+
+prelude = "let unif = (undefined :: a -> a -> ()) in "
+
+{-
+unif :: a -> a -> ()
+unif = undefined
+
+f :: (a -> b) -> (a,c) -> (b,c)
+f x y = let { _ = unif x (+1) ; _ = unif y (1,2) } in (2,2)
+f x y = let { _ = unif x (+"a") ; _ = unif y ("a",2) } in ("aa",2)
+-}

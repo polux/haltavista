@@ -31,16 +31,3 @@ main = do
   ios <- parse `fmap` getContents
   answers <- search ios
   putStrLn . unlines $ map pretty answers
-  
-
-{-
-main = do
-  ios <- parse `fmap` getContents
-  ty <- infer ios
-  print ty
-  cs <- filterM (flip matches ios) ["(+)","reverse","sort"]
-  putStrLn $ unlines cs
--}
-  
-  
-
