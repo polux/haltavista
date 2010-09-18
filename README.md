@@ -28,7 +28,7 @@ Example session 2 (refining search 1):
 
     Prelude (+)
 
-Example session 3 (higher-order types):
+Example session 3 (higher-order functions):
 
     brauner@worf:~$ haltavista 
     (+1) (+2) (1,1) (2,3)
@@ -39,13 +39,18 @@ Example session 3 (higher-order types):
 Under the hood, uses:
 
   - hint for type inference;
-  - hoogle for a list of candidates;
+  - hoogle to get a list of candidate functions;
   - hint for testing.
 
 ## Credits ##
 
 Hoogle calling facility has been copy-pasted (and later modified) from the [Yi]
 project.
+
+## Todo ##
+
+- catch stack overflows (is that possible?)
+- catch other errors (should do but doesn't for some reason)
 
 [Hoogle]: http://hackage.haskell.org/package/hoogle
 [Yi]: http://www.haskell.org/haskellwiki/Yi
