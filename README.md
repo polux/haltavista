@@ -3,6 +3,10 @@
 Search for haskell functions in installed libraries by providing input/output
 examples.
 
+## Requirements ##
+
+[Hoogle] has to be installed.
+
 ## Usage ##
 
 Example session : 
@@ -25,4 +29,5 @@ Under the hood, uses:
 Hoogle calling facility has been copy-pasted (and later modified) from the [Yi]
 project.
 
+[Hoogle]: http://hackage.haskell.org/package/hoogle
 [Yi]: http://www.haskell.org/haskellwiki/Yi

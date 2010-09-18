@@ -5,13 +5,16 @@ import HaltaVista.Match
 
 import Control.Monad(filterM)
 
+suffix = reverse . takeWhile (/= '.') . reverse
+
 search :: [([Input], Output)] -> IO [Answer]
 search ios = do
   mty <- infer ios
   case mty of
-    Nothing -> return []
-    Just ty -> do
-      candidates <- take 30 `fmap` hoogle ty
+    Left e   -> error (show e)
+    Right ty -> do
+      --putStrLn ("ty = " ++ (suffix ty))
+      candidates <- take 30 `fmap` hoogle (suffix ty)
       filterM (flip matches ios) candidates
 
 split xs = split' [] xs

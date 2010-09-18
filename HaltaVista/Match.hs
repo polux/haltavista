@@ -4,18 +4,24 @@ import HaltaVista.Types
 import qualified Language.Haskell.Interpreter as I
 import Control.Monad((<=<))
 import Data.List
+import System.Timeout(timeout)
+import Control.Exception(try, SomeException)
 
-convert (Left _)  = return False
-convert (Right x) = return x
-
---load = I.setImports ["Prelude", "Data.List"]
+thres = 1000000
 
 matches :: (String,String) -> [([Input], Output)] -> IO Bool
-matches (m,f) ios = convert =<< I.runInterpreter (I.setImports [m] >> check f ios)
+matches (m,f) ios = --putStrLn ("mod, fun = " ++ show (m,f)) >> 
+                    convert `fmap` handle res
+                    -- >>= (\x -> putStrLn ("res = " ++ show x) >> return x)
+  where res = I.runInterpreter $ I.setImports [m] >> check f ios
+        handle :: IO a -> IO (Maybe (Either SomeException a))
+        handle io = timeout thres (try io)
+        convert (Just (Right (Right x))) = x
+        convert _                        = False
 
-input f = prefix . intercalate " " . map parens
-  where parens x = "(" ++ x ++ ")"
-        prefix x = f ++ " " ++ x
+
+input f = prefix . intercalate " " . map I.parens
+  where prefix x = f ++ " " ++ x
 
 run f ios = mapM (I.eval . input f) ios
 
