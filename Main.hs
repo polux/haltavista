@@ -3,7 +3,7 @@ import HaltaVista.TypeInference
 import HaltaVista.Hoogle
 import HaltaVista.Match
 
-import Control.Monad(filterM)
+import Control.Monad(filterM, when)
 
 suffix = reverse . takeWhile (/= '.') . reverse
 
@@ -14,8 +14,7 @@ search ios = do
     Left e   -> error (show e)
     Right ty -> do
       --putStrLn ("ty = " ++ (suffix ty))
-      candidates <- take 30 `fmap` hoogle (suffix ty)
-      filterM (flip matches ios) candidates
+      hoogle (suffix ty)
 
 split xs = split' [] xs
   where split' acc [x]    = (reverse acc,x)
@@ -29,5 +28,7 @@ pretty (x,y) = x ++ " " ++ y
 
 main = do
   ios <- parse `fmap` getContents
-  answers <- search ios
-  putStrLn . unlines $ map pretty answers
+  candidates <- search ios
+  let pp cand = do ok <- matches cand ios
+                   when ok $ putStrLn $ pretty cand
+  mapM_ pp candidates
