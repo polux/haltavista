@@ -30,11 +30,11 @@ Example session 2 (refining search 1):
 
 Example session 3 (higher-order types):
 
-   brauner@worf:~$ haltavista 
-   (+1) (+2) (1,1) (2,3)
-   <EOF>
+    brauner@worf:~$ haltavista 
+    (+1) (+2) (1,1) (2,3)
+    <EOF>
 
-   Data.Graph.Inductive.Query.Monad (><)
+    Data.Graph.Inductive.Query.Monad (><)
 
 Under the hood, uses:
 
