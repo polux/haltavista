@@ -20,15 +20,6 @@ synth ios = prelude ++ "let " ++ body (map clause ios) ++ " in foo"
         args = map (("haltavista_x"++).show) [1..length (fst.head $ ios)]
         lhs = "foo " ++ unwords args
         clause (is,o) = lhs ++ " = let " ++ body (zipWith constr args is) ++ " in " ++ parens o
-        constr a i = "() = unif " ++ a ++ " " ++ parens i
+        constr a i = "() = equate " ++ a ++ " " ++ parens i
 
-prelude = "let unif = (undefined :: a -> a -> ()) in "
-
-{-
-unif :: a -> a -> ()
-unif = undefined
-
-f :: (a -> b) -> (a,c) -> (b,c)
-f x y = let { _ = unif x (+1) ; _ = unif y (1,2) } in (2,2)
-f x y = let { _ = unif x (+"a") ; _ = unif y ("a",2) } in ("aa",2)
--}
+prelude = "let equate = (undefined :: a -> a -> ()) in "

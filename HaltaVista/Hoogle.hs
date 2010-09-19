@@ -20,10 +20,12 @@ gv = filter f
 -- results or if the hoogle command is not on path.
 hoogleRaw :: String -> String -> IO [String]
 hoogleRaw srch opts = do (status,out,err) <- readProcessWithExitCode "hoogle" [opts, srch] ""
-                         when (status == ExitFailure 1) $ fail err 
-                         let results = lines out
-                         if results == ["No results found"] then fail "No Hoogle results"
-                                                            else return results
+                         return $ if (status == ExitFailure 1) 
+                                    then []
+                                    else let results = lines out
+                                         in if results == ["No results found"] 
+                                              then [] 
+                                              else results
 
 -- | Return module-function pairs.
 hoogle :: String -> IO [(String, String)]
