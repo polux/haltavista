@@ -3,9 +3,8 @@ module HaltaVista.TypeInference (infer) where
 import HaltaVista.Types
 import Language.Haskell.Interpreter hiding (infer)
 import Data.List
-import Control.Exception(throw)
 
-convert (Left e)  = Left "wrong input"
+convert (Left _)  = Left "wrong input"
 convert (Right x) = Right (unwords $ lines x)
 
 load = do setImports ["Prelude"]
